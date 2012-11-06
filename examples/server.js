@@ -9,13 +9,12 @@ var pingpong = require('ping-pong')
 
 var PORT = 3000
 
-shoe(function (stream) {
+shoe(reloader(function (stream) {
   console.log('connection')
   //add a header, that will tell the client to restart...
-  reloader(stream)
 //  stream.pipe(pingpong()).pipe(stream)
   stream.pipe(stream)
-}).install(
+})).install(
   http.createServer(
     ecstatic(join(__dirname, 'static'))
   ).listen(PORT, function () {

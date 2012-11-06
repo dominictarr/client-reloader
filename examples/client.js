@@ -11,16 +11,14 @@ function log(data) {
 }
 
 var r = 
-reconnect(function (stream) {
-  reloader(stream)
-  .on('reload', function () {
-    log('RELOAD')
-  })
+reconnect(reloader(function (stream) {
+  console.log('STREAM', stream)
+
   setInterval(function () {
     stream.write('ping:'+Date.now())
   }, 1000)
 
   stream.on('data', log)
-}).connect('/shoe')
+})).connect('/shoe')
 
 document.body.appendChild(r.widget())
