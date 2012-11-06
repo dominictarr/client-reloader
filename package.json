@@ -1,10 +1,10 @@
 {
-  "name": "reloader",
+  "name": "client-reloader",
   "version": "0.0.0",
-  "homepage": "https://github.com/dominictarr/reloader",
+  "homepage": "https://github.com/dominictarr/client-reloader",
   "repository": {
     "type": "git",
-    "url": "git://github.com/dominictarr/reloader.git"
+    "url": "git://github.com/dominictarr/client-reloader.git"
   },
   "browserify": "./browser.js",
   "dependencies": {
