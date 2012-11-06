@@ -8,9 +8,11 @@
   },
   "browserify": "./browser.js",
   "dependencies": {
-    "macgyver": "~1.9.0"
+    "header-stream": "~0.0.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "macgyver": "~1.9.0"  
+  },
   "scripts": {
     "test": "set -e; for t in test/*.js; do node $t; done"
   },
