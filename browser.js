@@ -18,7 +18,7 @@ module.exports = function (stream, _version) {
       stream.emit('reload', meta.version, version)
       if('function' == typeof stream) stream.destroy()
 
-      window.location = window.location //MAGIC
+      window.location.reload(true)
     }
   })
   return stream
