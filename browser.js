@@ -16,7 +16,7 @@ module.exports = function (stream, _version) {
       version = meta.version
     if(meta.version !== version) {
       stream.emit('reload', meta.version, version)
-      if('function' == typeof stream) stream.destroy()
+      stream.end()
 
       window.location.reload(true)
     }
