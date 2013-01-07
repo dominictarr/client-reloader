@@ -13,7 +13,7 @@ var reloader  = require('client-reloader')
 
 reconnect(reloader(function (stream) {
   //your good! use the stream!
-})).connect('/shoe')
+}, meta)).connect('/shoe')
 ```
 When the client reconnects, the server will send the current version,
 if it is different to the server version, the client will reload.
@@ -28,6 +28,9 @@ var ecstatic = require('ecstatic')
 shoe(reloader(function (stream) {
   //the client has successfull connected, 
   //with the right version!
+
+  //also, here is the metadata passed from the client.
+  console.log(stream.meta)
 }), VERSION).install(
   //serve static files.
   http.createServer(ecstatic(__dirname+'/static'))
