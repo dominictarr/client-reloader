@@ -1,16 +1,24 @@
 
 var header = require('header-stream')
 
-var version
+var version = 0
 /**
 TODO
 more sophisticated reloading, 
 pass in a package and a semver range...
 **/
-module.exports = function (handler) {
+module.exports = function (handler, init) {
   return function (stream) {
     var args = [].slice.call(arguments)
-    header(stream).writeHead()
+    init = init || {}
+
+    if(version)
+      init.version = version
+
+    header(stream)
+      .setHeader(init)
+      .writeHead()
+
     stream.on('header', function (meta) {
 
       if(!version)
