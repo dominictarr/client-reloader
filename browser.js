@@ -12,9 +12,11 @@ module.exports = function (handler, init) {
     var args = [].slice.call(arguments)
     init = init || {}
 
-    if(version)
-      init.version = version
-
+    init.version = version || 0
+    
+    console.log('HEADERZ', stream)
+    console.log(stream._rand = stream._rand || Math.random())
+    
     header(stream)
       .setHeader(init)
       .writeHead()
@@ -23,19 +25,21 @@ module.exports = function (handler, init) {
 
       if(!version)
         version = meta.version
-      if(meta.version !== version) {
+      if(meta.version !== version && version !== 0) {
         stream.emit('reload', meta.version, version)
         stream.end()
 
         return window.location.reload(true)
-      }
+      } else
+        version = meta.version
 
+      console.log('HANDLE')
       handler.apply(this, args)
     })
   }
 
 }
-
+/*
 var wrap = function (stream, _version) {
   version = _version || version
   stream = header(stream)
@@ -52,3 +56,4 @@ var wrap = function (stream, _version) {
   })
   return stream
 }
+*/

@@ -7,7 +7,6 @@ var version = Date.now()
 
 module.exports = function (handler, _version) {
   return function (stream) {
-
     version = _version || version
     stream = header(stream)
     stream.writeHead({version: version})
@@ -25,7 +24,7 @@ module.exports = function (handler, _version) {
       //by this module. 
       //however, if they reopened my app, but I've started a new app, then the old code
       //would still be in the cache... which broke stuff.
-      if(meta.version != version || meta.version === 0)
+      if(meta.version != version && meta.version !== 0)
         return stream.end()
       handler.apply(this, args)
     })
