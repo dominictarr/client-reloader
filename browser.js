@@ -14,9 +14,6 @@ module.exports = function (handler, init) {
 
     init.version = version || 0
     
-    console.log('HEADERZ', stream)
-    console.log(stream._rand = stream._rand || Math.random())
-    
     header(stream)
       .setHeader(init)
       .writeHead()
@@ -33,7 +30,6 @@ module.exports = function (handler, init) {
       } else
         version = meta.version
 
-      console.log('HANDLE')
       handler.apply(this, args)
     })
   }
