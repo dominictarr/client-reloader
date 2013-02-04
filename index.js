@@ -5,7 +5,7 @@ var header = require('header-stream')
 var version = Date.now()
 
 module.exports = function (handler, meta) {
-  if ('object' !== typeof meta)
+  if (!meta || 'object' !== typeof meta)
     meta = {version: meta}
   meta.version = meta.version || version
 

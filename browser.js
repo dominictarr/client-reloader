@@ -21,34 +21,16 @@ module.exports = function (handler, init) {
     stream.on('header', function (meta) {
       if(!init.version)
         init.version = meta.version
-      else if(meta.version !== init.version && init.version !== 0) {
+      else if(meta.version !== init.version && init.version) {
         stream.emit('reload', meta.version, init.version)
         stream.end()
 
         return window.location.reload(true)
-      } //else
-        //init.version = meta.version
+      }
 
       handler.apply(this, args)
     })
   }
 
 }
-/*
-var wrap = function (stream, _version) {
-  version = _version || version
-  stream = header(stream)
-  stream.on('header', function (meta) {
-    //is it same version as last time?
-    if(!version)
-      version = meta.version
-    if(meta.version !== version) {
-      stream.emit('reload', meta.version, version)
-      stream.end()
 
-      window.location.reload(true)
-    }
-  })
-  return stream
-}
-*/
