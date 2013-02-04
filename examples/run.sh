@@ -1,4 +1,4 @@
 #! /bin/bash
 
 browserify client.js -o static/bundle.js --debug
-node server.js --version $1
+node server.js "$@"
