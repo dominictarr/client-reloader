@@ -4,15 +4,17 @@ var header = require('header-stream')
 //server side...
 var version = Date.now()
 
+module.exports = function (handler, meta) {
+  if ('object' !== typeof meta)
+    meta = {version: meta}
+  meta.version = meta.version || version
 
-module.exports = function (handler, _version) {
   return function (stream) {
-    version = _version || version
     stream = header(stream)
-    stream.writeHead({version: version})
+    stream.writeHead(meta)
     //maybe expand this to have more options, like setting a range...
     var args = [].slice.call(arguments)
-    stream.on('header', function (meta) {
+    stream.on('header', function (_meta) {
       //if the other end has the wrong version,
       //don't bother passing this to the app.
       //TODO: also check that the other end is the right app.
@@ -24,8 +26,9 @@ module.exports = function (handler, _version) {
       //by this module. 
       //however, if they reopened my app, but I've started a new app, then the old code
       //would still be in the cache... which broke stuff.
-      if(meta.version != version && meta.version !== 0)
+      if(_meta.version !== meta.version && _meta.version) {
         return stream.end()
+      }
       handler.apply(this, args)
     })
   }

@@ -8,27 +8,26 @@ more sophisticated reloading,
 pass in a package and a semver range...
 **/
 module.exports = function (handler, init) {
+  init = init || {}
+  init.version = version || 0
+    
   return function (stream) {
     var args = [].slice.call(arguments)
-    init = init || {}
 
-    init.version = version || 0
-    
     header(stream)
       .setHeader(init)
       .writeHead()
 
     stream.on('header', function (meta) {
-
-      if(!version)
-        version = meta.version
-      if(meta.version !== version && version !== 0) {
-        stream.emit('reload', meta.version, version)
+      if(!init.version)
+        init.version = meta.version
+      if(meta.version !== init.version && init.version !== 0) {
+        stream.emit('reload', meta.version, init.version)
         stream.end()
 
         return window.location.reload(true)
       } else
-        version = meta.version
+        init.version = meta.version
 
       handler.apply(this, args)
     })
