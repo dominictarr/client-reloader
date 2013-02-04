@@ -21,13 +21,13 @@ module.exports = function (handler, init) {
     stream.on('header', function (meta) {
       if(!init.version)
         init.version = meta.version
-      if(meta.version !== init.version && init.version !== 0) {
+      else if(meta.version !== init.version && init.version !== 0) {
         stream.emit('reload', meta.version, init.version)
         stream.end()
 
         return window.location.reload(true)
-      } else
-        init.version = meta.version
+      } //else
+        //init.version = meta.version
 
       handler.apply(this, args)
     })
